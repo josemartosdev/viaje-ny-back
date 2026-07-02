@@ -90,3 +90,38 @@ Todas las respuestas de error devuelven:
 ## Pruebas rápidas
 
 Usa [api-tests.http](api-tests.http) para probar CRUD y filtros.
+
+## Deploy en Railway (Docker)
+
+Este repositorio ya incluye config lista para Railway:
+
+- [Dockerfile](Dockerfile)
+- [railway.toml](railway.toml)
+- [docker/start.sh](docker/start.sh)
+
+### Pasos
+
+1. Crea un proyecto en Railway y conecta este repositorio.
+2. Crea un servicio MySQL en Railway.
+3. En el servicio de la API, define variables de entorno:
+
+```dotenv
+APP_ENV=prod
+APP_DEBUG=0
+APP_SECRET=pon_un_secret_largo_y_unico
+DATABASE_URL=mysql://USER:PASSWORD@HOST:3306/DBNAME?serverVersion=8.0.32&charset=utf8mb4
+CORS_ALLOW_ORIGIN=^https://tu-frontend\.railway\.app$
+```
+
+4. Ejecuta Deploy.
+
+El contenedor arranca con `docker/start.sh` y hace:
+
+1. `cache:clear` en prod
+2. `doctrine:migrations:migrate`
+3. levantar servidor HTTP en `0.0.0.0:$PORT`
+
+### Nota importante
+
+- No cargar fixtures en produccion.
+- Mantener CORS restringido al dominio real del frontend.
