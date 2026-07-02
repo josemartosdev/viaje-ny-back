@@ -20,7 +20,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 COPY --from=vendor /app/vendor ./vendor
 COPY . .
-RUN mkdir -p var/cache var/log \
+RUN if [ ! -f .env ]; then \
+    printf "APP_ENV=prod\nAPP_DEBUG=0\nAPP_SECRET=change-me-in-railway\nDATABASE_URL=sqlite:///%kernel.project_dir%/var/data.db\n" > .env; \
+    fi \
+    && mkdir -p var/cache var/log \
     && chown -R www-data:www-data var
 
 ENV APP_ENV=prod
