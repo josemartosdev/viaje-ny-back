@@ -31,6 +31,10 @@ if [ ! -f .env ]; then
 	printf "APP_ENV=%s\nAPP_DEBUG=%s\nAPP_SECRET=%s\nDATABASE_URL=%s\n" "${APP_ENV:-prod}" "${APP_DEBUG:-0}" "${APP_SECRET:-change-me-in-railway}" "${DATABASE_URL}" > .env
 fi
 
+# Export APP_ENV for the PHP server
+export APP_ENV="${APP_ENV:-prod}"
+export APP_DEBUG="${APP_DEBUG:-0}"
+
 php bin/console cache:clear --env=prod --no-debug
 
 attempt=1
@@ -51,3 +55,4 @@ while [ "$attempt" -le "$max_attempts" ]; do
 done
 
 exec php -S 0.0.0.0:${PORT} -t public public/index.php
+
