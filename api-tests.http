@@ -1,0 +1,100 @@
+### Variables
+@baseUrl = http://127.0.0.1:8000
+
+### TRIPS - List
+GET {{baseUrl}}/api/trips
+
+### TRIPS - Create
+POST {{baseUrl}}/api/trips
+Content-Type: application/json
+
+{
+  "name": "Viaje NYC Agosto 2026",
+  "city": "New York",
+  "startDate": "2026-08-02",
+  "endDate": "2026-08-10",
+  "currency": "USD",
+  "notes": "Plan inicial"
+}
+
+### DAYS - List by trip
+GET {{baseUrl}}/api/days?tripId=1
+
+### DAYS - Create
+POST {{baseUrl}}/api/days
+Content-Type: application/json
+
+{
+  "tripId": 1,
+  "date": "2026-08-03",
+  "title": "Dia de museos",
+  "district": "Upper East Side",
+  "weatherTip": "Llevar paraguas plegable"
+}
+
+### PLACES - List filters
+GET {{baseUrl}}/api/places?type=restaurant&minPriceLevel=1&maxPriceLevel=3&q=taco
+
+### PLACES - Create
+POST {{baseUrl}}/api/places
+Content-Type: application/json
+
+{
+  "name": "Joe's Pizza",
+  "type": "restaurant",
+  "address": "7 Carmine St, New York",
+  "priceLevel": 2,
+  "averagePrice": 18,
+  "currency": "USD",
+  "notes": "Opciones para cena rapida"
+}
+
+### ACTIVITIES - List filters
+GET {{baseUrl}}/api/activities?dayId=1&status=planned&category=food&q=cena
+
+### ACTIVITIES - Create
+POST {{baseUrl}}/api/activities
+Content-Type: application/json
+
+{
+  "dayId": 1,
+  "placeId": 1,
+  "title": "Cena en restaurant",
+  "category": "food",
+  "startTime": "20:00:00",
+  "endTime": "21:30:00",
+  "status": "planned",
+  "price": 35,
+  "currency": "USD",
+  "notes": "Probar platos sin gluten"
+}
+
+### TICKETS - List filters
+GET {{baseUrl}}/api/tickets?dayId=1&type=boarding&q=ba4267
+
+### TICKETS - Create
+POST {{baseUrl}}/api/tickets
+Content-Type: application/json
+
+{
+  "dayId": 1,
+  "activityId": 1,
+  "type": "boarding",
+  "title": "Boarding pass vuelo",
+  "provider": "Iberia",
+  "code": "7YZ5JJ",
+  "holder": "Ana Corbalan",
+  "gate": "T4S",
+  "currency": "EUR"
+}
+
+### ACTIVITIES - Update
+PATCH {{baseUrl}}/api/activities/1
+Content-Type: application/json
+
+{
+  "status": "done"
+}
+
+### TICKETS - Delete
+DELETE {{baseUrl}}/api/tickets/1
