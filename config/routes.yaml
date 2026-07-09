@@ -8,5 +8,5 @@
 #   bin/console debug:router
 
 controllers:
-    resource: routing.controllers.yaml
+    resource: routes/routing.controllers.yaml
 
