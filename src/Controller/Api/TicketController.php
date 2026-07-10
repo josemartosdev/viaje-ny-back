@@ -54,11 +54,7 @@ final class TicketController extends AbstractApiController
     #[Route('', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-        try {
-            $payload = $this->parseJson($request);
-        } catch (\Throwable $e) {
-            return $this->badRequest($e->getMessage());
-        }
+        $payload = $this->parseJson($request);
 
         $ticket = new Ticket();
         $error = $this->hydrate($ticket, $payload);
@@ -85,11 +81,7 @@ final class TicketController extends AbstractApiController
             return $this->notFound('Ticket');
         }
 
-        try {
-            $payload = $this->parseJson($request);
-        } catch (\Throwable $e) {
-            return $this->badRequest($e->getMessage());
-        }
+        $payload = $this->parseJson($request);
 
         $error = $this->hydrate($ticket, $payload);
         if ($error !== null) {

@@ -55,11 +55,7 @@ final class ActivityController extends AbstractApiController
     #[Route('', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-        try {
-            $payload = $this->parseJson($request);
-        } catch (\Throwable $e) {
-            return $this->badRequest($e->getMessage());
-        }
+        $payload = $this->parseJson($request);
 
         $activity = new Activity();
         $error = $this->hydrate($activity, $payload);
@@ -86,11 +82,7 @@ final class ActivityController extends AbstractApiController
             return $this->notFound('Activity');
         }
 
-        try {
-            $payload = $this->parseJson($request);
-        } catch (\Throwable $e) {
-            return $this->badRequest($e->getMessage());
-        }
+        $payload = $this->parseJson($request);
 
         $error = $this->hydrate($activity, $payload);
         if ($error !== null) {

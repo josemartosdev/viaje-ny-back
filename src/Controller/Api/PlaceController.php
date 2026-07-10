@@ -52,11 +52,7 @@ final class PlaceController extends AbstractApiController
     #[Route('', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-        try {
-            $payload = $this->parseJson($request);
-        } catch (\Throwable $e) {
-            return $this->badRequest($e->getMessage());
-        }
+        $payload = $this->parseJson($request);
 
         $place = new Place();
         $error = $this->hydrate($place, $payload);
@@ -83,11 +79,7 @@ final class PlaceController extends AbstractApiController
             return $this->notFound('Place');
         }
 
-        try {
-            $payload = $this->parseJson($request);
-        } catch (\Throwable $e) {
-            return $this->badRequest($e->getMessage());
-        }
+        $payload = $this->parseJson($request);
 
         $error = $this->hydrate($place, $payload);
         if ($error !== null) {

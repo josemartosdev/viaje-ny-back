@@ -43,17 +43,13 @@ final class DayController extends AbstractApiController
             return $this->notFound('Day');
         }
 
-        return ApiResponder::success(EntityTransformer::day($day));
+        return ApiResponder::success(EntityTransformer::dayFull($day));
     }
 
     #[Route('', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-        try {
-            $payload = $this->parseJson($request);
-        } catch (\Throwable $e) {
-            return $this->badRequest($e->getMessage());
-        }
+        $payload = $this->parseJson($request);
 
         $day = new Day();
         $relationshipError = $this->hydrate($day, $payload);
@@ -80,11 +76,7 @@ final class DayController extends AbstractApiController
             return $this->notFound('Day');
         }
 
-        try {
-            $payload = $this->parseJson($request);
-        } catch (\Throwable $e) {
-            return $this->badRequest($e->getMessage());
-        }
+        $payload = $this->parseJson($request);
 
         $relationshipError = $this->hydrate($day, $payload);
         if ($relationshipError !== null) {

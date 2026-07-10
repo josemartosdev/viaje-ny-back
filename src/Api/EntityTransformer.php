@@ -100,4 +100,21 @@ final class EntityTransformer
             'notes' => $ticket->getNotes(),
         ];
     }
+
+    /** @return array<string, mixed> */
+    public static function dayFull(Day $day): array
+    {
+        return array_merge(self::day($day), [
+            'activities' => array_map(static fn(Activity $a): array => self::activity($a), $day->getActivities()->toArray()),
+            'tickets' => array_map(static fn(Ticket $t): array => self::ticket($t), $day->getTickets()->toArray()),
+        ]);
+    }
+
+    /** @return array<string, mixed> */
+    public static function tripFull(Trip $trip): array
+    {
+        return array_merge(self::trip($trip), [
+            'days' => array_map(static fn(Day $d): array => self::dayFull($d), $trip->getDays()->toArray()),
+        ]);
+    }
 }

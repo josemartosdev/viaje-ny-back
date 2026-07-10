@@ -41,17 +41,13 @@ final class TripController extends AbstractApiController
             return $this->notFound('Trip');
         }
 
-        return ApiResponder::success(EntityTransformer::trip($trip));
+        return ApiResponder::success(EntityTransformer::tripFull($trip));
     }
 
     #[Route('', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-        try {
-            $payload = $this->parseJson($request);
-        } catch (\Throwable $e) {
-            return $this->badRequest($e->getMessage());
-        }
+        $payload = $this->parseJson($request);
 
         $trip = new Trip();
         $this->hydrate($trip, $payload);
@@ -75,11 +71,7 @@ final class TripController extends AbstractApiController
             return $this->notFound('Trip');
         }
 
-        try {
-            $payload = $this->parseJson($request);
-        } catch (\Throwable $e) {
-            return $this->badRequest($e->getMessage());
-        }
+        $payload = $this->parseJson($request);
 
         $this->hydrate($trip, $payload);
         $violations = $this->validator->validate($trip);

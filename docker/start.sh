@@ -28,7 +28,12 @@ case "${DATABASE_URL}" in
 esac
 
 if [ ! -f .env ]; then
-	printf "APP_ENV=%s\nAPP_DEBUG=%s\nAPP_SECRET=%s\nDATABASE_URL=%s\n" "${APP_ENV:-prod}" "${APP_DEBUG:-0}" "${APP_SECRET:-change-me-in-railway}" "${DATABASE_URL}" > .env
+	printf "APP_ENV=%s\nAPP_DEBUG=%s\nAPP_SECRET=%s\nDATABASE_URL=%s\nCORS_ALLOW_ORIGIN=%s\n" \
+		"${APP_ENV:-prod}" \
+		"${APP_DEBUG:-0}" \
+		"${APP_SECRET:-change-me-in-railway}" \
+		"${DATABASE_URL}" \
+		"${CORS_ALLOW_ORIGIN:-.*}" > .env
 fi
 
 # Export APP_ENV for the PHP server
